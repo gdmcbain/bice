@@ -13,8 +13,7 @@ The resulting bifurcation diagram, matches figure 1.1 (left) of Farrell, Birkiss
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.sparse import dia_matrix
-from skfem import asm, condense, InteriorBasis, MeshLine, ElementLineP1
+from skfem import asm, InteriorBasis, MeshLine, ElementLineP1
 from skfem.models.poisson import laplace, mass
 from bice import Problem, Equation
 
@@ -33,7 +32,7 @@ class Bratu1dEquation(Equation):
         self.lap = asm(laplace, self.basis)
         self.mass = asm(mass, self.basis)
         # boundary node indices
-        self.D = self.basis.find_dofs()['all'].nodal['u']
+        self.D = self.basis.get_dofs()
         # initial unknowns
         self.u = np.zeros(self.basis.N)
         # parameter
